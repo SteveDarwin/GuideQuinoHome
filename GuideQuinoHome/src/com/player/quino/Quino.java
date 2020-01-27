@@ -6,7 +6,7 @@ import com.player.quino.validation.QuinoValidator;
 /**
  * @author Steve Andrew Darwin
  * 
- * This specifies the moves based on user input
+ * This class specifies the game play based on user input
  * and provides the shortest way to guide Quino home
  */
 public class Quino {
@@ -30,29 +30,42 @@ public class Quino {
 		setFinalPosition(new int[2]);
 	}
 	
+	/**
+     * Calculate shortest distance to reach home
+     *
+     * @return  stepsToHome
+     */
 	public int calculateStepsToHome() {
 		int direction = 0;
 		int stepsToHome = 0;
 
-		for(String name : getQuinoInput().fetchInputString()){
-			char move = Character.toUpperCase(name.charAt(0));
-			int steps = Integer.parseInt(name.substring(1));
-			if (move == 'R') 
+		for(String userInput : getQuinoInput().fetchInputString()){
+			char move = Character.toUpperCase(userInput.charAt(0));
+			int steps = Integer.parseInt(userInput.substring(1));
+			if (move == 'R')
+				//Move Right
 				direction = (direction + 1) % 4;
 			else if (move == 'L') 
+				//Move Left
 				direction = (4 + direction - 1) % 4;
 			else
+				//Move Forward or Backward - specified as move 'F' and 'B' respectively
 				setFinalPosition(calculateMovement(direction, move, steps));
 		}
 
-		if(getFinalPosition()[0] != getFinalPosition()[1]) {
+		if(getFinalPosition()[0] != getFinalPosition()[1])
 			stepsToHome = Math.abs(getFinalPosition()[1] - getFinalPosition()[0]);
-		} else {
+		else
 			stepsToHome = Math.abs(getFinalPosition()[1] + getFinalPosition()[0]);
-		}
 		return stepsToHome;
 	}
 	
+	/**
+     * Calculate robot movement based on user input 
+     *
+     * @param   direction, move, steps
+     * @return  currentPosition
+     */
 	public int[] calculateMovement(int direction, char move, int steps) {
 		switch(direction) {
 			case 0:
@@ -87,14 +100,17 @@ public class Quino {
 		return getPosition();
 	}
 	
-	/**
-	 * @param args
-	 */
 	public static void main(String[] args) {
 		Quino quino = new Quino();
+		//Validating the user input
 		if(quino.getQuinoValidator().validateUserInput(quino.getQuinoInput().getInput())) {
+			//Calculating the shortest distance to reach starting point or home
 			quino.setShortestDistance(quino.calculateStepsToHome()); 
-			System.out.println("Shortest path = " + quino.getShortestDistance());
+			/*Note: As best practice, Loggers should be used in place of System.out with error codes.
+			 * Logger can be customized to show the output directly without the time stamp. 
+			 * This can be implemented by extending the log4j appender for INFO level.
+			*/
+			System.out.println(quino.getShortestDistance());
 		}
 		else
 			System.out.println("Invalid Input");
