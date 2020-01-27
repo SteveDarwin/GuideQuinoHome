@@ -11,7 +11,7 @@ package com.player.quino.input;
 public class QuinoInput {
 
 	private String[] steps;
-	private String input = "R1,F101,B3,L1,F12";
+	private String input = "F1,B1";
 	
 	public QuinoInput() {
 		setSteps(new String[100]);

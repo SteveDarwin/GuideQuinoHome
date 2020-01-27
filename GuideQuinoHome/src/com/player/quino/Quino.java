@@ -110,7 +110,11 @@ public class Quino {
 			 * Logger can be customized to show the output directly without the time stamp. 
 			 * This can be implemented by extending the log4j appender for INFO level.
 			*/
-			System.out.println(quino.getShortestDistance());
+			if(quino.getShortestDistance()!=0)
+				System.out.println(quino.getShortestDistance());
+			else
+				//Robot cannot immediately go home
+				System.out.println("Invalid Input");
 		}
 		else
 			System.out.println("Invalid Input");
