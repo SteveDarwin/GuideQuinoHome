@@ -1,6 +1,6 @@
 package com.player.quino;
 
-import com.player.quino.input.InputByString;
+import com.player.quino.input.QuinoInput;
 import com.player.quino.validation.QuinoValidator;
 
 /**
@@ -12,7 +12,7 @@ import com.player.quino.validation.QuinoValidator;
 public class Quino {
 
 	private QuinoValidator quinoValidator;
-	private InputByString inputByString;
+	private QuinoInput quinoInput;
 	
 	private int shortestDistance;
 	private int x;
@@ -22,7 +22,7 @@ public class Quino {
 	
 	public Quino() {
 		setQuinoValidator(new QuinoValidator());
-		setInputByString(new InputByString());
+		setQuinoInput(new QuinoInput());
 		setShortestDistance(0);
 		x = 0;
 		y = 0;
@@ -34,9 +34,9 @@ public class Quino {
 		int direction = 0;
 		int stepsToHome = 0;
 
-		for(String name : getInputByString().fetchInputString()){
+		for(String name : getQuinoInput().fetchInputString()){
 			char move = Character.toUpperCase(name.charAt(0));
-			int steps = Character.getNumericValue(name.charAt(1));
+			int steps = Integer.parseInt(name.substring(1));
 			if (move == 'R') 
 				direction = (direction + 1) % 4;
 			else if (move == 'L') 
@@ -92,7 +92,7 @@ public class Quino {
 	 */
 	public static void main(String[] args) {
 		Quino quino = new Quino();
-		if(quino.getQuinoValidator().validateUserInput(quino.getInputByString().getInput())) {
+		if(quino.getQuinoValidator().validateUserInput(quino.getQuinoInput().getInput())) {
 			quino.setShortestDistance(quino.calculateStepsToHome()); 
 			System.out.println("Shortest path = " + quino.getShortestDistance());
 		}
@@ -108,12 +108,12 @@ public class Quino {
 		this.quinoValidator = quinoValidator;
 	}
 
-	private InputByString getInputByString() {
-		return this.inputByString;
+	private QuinoInput getQuinoInput() {
+		return this.quinoInput;
 	}
 
-	private void setInputByString(InputByString inputByString) {
-		this.inputByString = inputByString;
+	private void setQuinoInput(QuinoInput quinoInput) {
+		this.quinoInput = quinoInput;
 	}
 
 	private int getShortestDistance() {

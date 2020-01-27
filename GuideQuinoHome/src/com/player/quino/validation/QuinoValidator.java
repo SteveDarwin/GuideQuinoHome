@@ -14,8 +14,28 @@ public class QuinoValidator {
 	}
 	
 	public boolean validateUserInput(String input) {
-        if (input.length() == 0 || !input.matches("[fbrlFBRL1-9,]+"))
+		int turnCount = 0;
+		
+        if (input.length() == 0 || !input.matches("[fbrlFBRL].*[0-9,]+"))
             setInputValid(false);
+        
+        String[] inputWithoutDelimiter = input.split(",");
+        
+        for(String movement : inputWithoutDelimiter){
+        	if(movement.charAt(1) == 0 || turnCount>1) {
+				setInputValid(false);
+				break;
+			}
+			if(movement.charAt(0) == 'R' || movement.charAt(0) == 'L') {
+				if(Character.getNumericValue(movement.charAt(1)) != 1) {
+					setInputValid(false);
+					break;
+				} 
+				turnCount++;
+			} 
+			else if(turnCount == 1)
+				turnCount--;
+        }
         return isInputValid();
     }
 

@@ -5,19 +5,20 @@ package com.player.quino.input;
  * 
  * This specifies the moves that can be obtained 
  * using an input string
+ * 
  */
-public class InputByString {
+public class QuinoInput {
 
 	private String[] steps;
-	private String input = "F1,R1,B2,L1,B3,R1,F4";
+	private String input = "F1,R1,B3";
 	
-	public InputByString() {
+	public QuinoInput() {
 		setSteps(new String[100]);
 	}
 	
 	public String[] fetchInputString() {
-		String[] removeCommaFromMoves = getInput().split(",");
-		setSteps(removeCommaFromMoves);
+		String[] inputWithoutDelimiter = getInput().split(",");
+		setSteps(inputWithoutDelimiter);
 		return getSteps();
 	}
 
